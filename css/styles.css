@@ -1,0 +1,42 @@
+
+body {
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#store {
+    padding: 1em 2em 1em 1em;
+}
+
+
+
+h2 {
+    line-height: 2em;
+    margin: 0 0 0 1em;
+}
+
+.container {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #AAAAAA;
+    cursor: default;
+    padding: 1em 3em;
+}
+.bookListContainer {
+    width: 233px;
+}
+
+
+ol {
+    height: 300px;
+    margin: 0;
+}
+
+#message.ok{
+	color:green;
+	font-weight:bold;
+}
+
+#message.ko{
+	color:red;
+	font-weight:bold;
+}
