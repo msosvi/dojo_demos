@@ -2,74 +2,73 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>dojo.dnd :: Demo 1</title>
-	<meta charset="utf-8">
+    <title>dojo.dnd :: Demo 1</title>
+    <meta charset="utf-8">
 
-	<link href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dojo.css" media="all" type="text/css" rel="stylesheet"/>
-	<link href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dnd.css" media="all" type="text/css" rel="stylesheet"/>
-	<link href="css/dnd.css" media="all" type="text/css" rel="stylesheet"/>
-	<link href="css/styles.css" media="all" type="text/css" rel="stylesheet"/>
-	<link href="css/simplegrid.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dojo.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dnd.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="css/dnd.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="css/styles.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="css/simplegrid.css" media="all" type="text/css" rel="stylesheet"/>
 
-	<script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js" data-dojo-config="async: true"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js" data-dojo-config="async: true"></script>
 
-	<script>
-		require([ "dojo/dnd/Source", "dojo/dom", "dojo/query", "dojo/aspect","dojo/domReady!" ], function(Source,dom,query,aspect){
+    <script>
+    require([ "dojo/dnd/Source", "dojo/dom", "dojo/query", "dojo/aspect","dojo/domReady!" ], function(Source,dom,query,aspect){
 
-
-			var correctSongs=["Juego De Tronos", "Choque De Reyes","Tormenta De Espadas", "Festín De Cuervos", "Danza De Dragones"];
-
-
-			function setMessage(){
-				var message = dom.byId("message");
-		    	if (isSongListOk()){
-		    		message.innerHTML = "¡Muy bien, eres un fenómeno!";
-		    		message.className="ok";
-		    	}else{
-			    	message.innerHTML = "Todavía te queda, no está bien.";
-			    	message.className="ko";
-		    	}
-			}
-
-			function isSongListOk(){
-				var songNodes = query("#bookListNode li");
-				var currentSongs = new Array();
+        var correctSongs=["Juego De Tronos", "Choque De Reyes","Tormenta De Espadas", "Festín De Cuervos", "Danza De Dragones"];
 
 
-				songNodes.forEach(function (node,index,nodelist){
-					currentSongs[index]=node.innerHTML;
-				});
+        function setMessage(){
+            var message = dom.byId("message");
+
+            if (isSongListOk()){
+              message.innerHTML = "¡Muy bien, eres un fenómeno!";
+              message.className="ok";
+            }else{
+              message.innerHTML = "Todavía te queda, no está bien.";
+              message.className="ko";
+            }
+        }
+
+        function isSongListOk(){
+            var songNodes = query("#bookListNode li");
+            var currentSongs = new Array();
+
+            songNodes.forEach(function (node,index,nodelist){
+             currentSongs[index]=node.innerHTML;
+            });
+
+            return currentSongs.toString()==correctSongs.toString();
+        }
 
 
-				return currentSongs.toString()==correctSongs.toString();
+        var bookList = new Source("bookListNode");
+        bookList.insertNodes(false, [
+            "Danza De Dragones",
+            "Festín De Cuervos",
+            "Juego De Tronos",
+            "Tormenta De Espadas",
+            "Choque De Reyes"
+            ]);
 
-			}
+        aspect.after(bookList, "onDrop", setMessage);
+    });
 
-
-			var bookList = new Source("bookListNode");
-			bookList.insertNodes(false, [
-				"Danza De Dragones",
-				"Festín De Cuervos",
-				"Juego De Tronos",
-				"Tormenta De Espadas",
-				"Choque De Reyes"
-			]);
-
-			aspect.after(bookList, "onDrop", setMessage);
-		});
-	</script>
-
+    </script>
 </head>
+
 <body id="demo1">
-	<h1>dojo.dnd :: Demo 1</h1>
+    <h1>dojo.dnd :: Demo 1</h1>
 
-	<div id="store">
-		<div class="bookListContainer">
-			<h2>Canción de  Hielo y Fuego</h2>
-			<ol id="bookListNode" class="container"></ol>
-		</div>
-		<h1 id="message" />
-	</div>
+    <div id="store">
+        <div class="bookListContainer">
+            <h2>Canción de  Hielo y Fuego</h2>
+            <ol id="bookListNode" class="container"></ol>
+        </div>
 
+        <h1 id="message" />
+    </div>
+    
 </body>
 </html>

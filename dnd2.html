@@ -1,122 +1,114 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-	<title>dojo.dnd :: Demo 2</title>
-	<meta charset="utf-8">
+    <title>dojo.dnd :: Demo 2</title>
+    <meta charset="utf-8">
 
-	<link href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dojo.css" media="all" type="text/css" rel="stylesheet"/>
-	<link href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dnd.css" media="all" type="text/css" rel="stylesheet"/>
-	<link href="css/dnd.css" media="all" type="text/css" rel="stylesheet"/>
-	<link href="css/styles.css" media="all" type="text/css" rel="stylesheet"/>
-	<link href="css/simplegrid.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dojo.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/resources/dnd.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="css/dnd.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="css/styles.css" media="all" type="text/css" rel="stylesheet"/>
+    <link href="css/simplegrid.css" media="all" type="text/css" rel="stylesheet"/>
 
-	<script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js" data-dojo-config="async: true"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.3/dojo/dojo.js" data-dojo-config="async: true"></script>
 
-	<script>
-		require([ "dojo/dnd/Source", "dojo/dom", "dojo/aspect","dojo/query", "dojo/domReady!" ], function(Source,dom,aspect,query){
-
-
-			var correctSongs=["Juego De Tronos", "Choque De Reyes","Tormenta De Espadas", "Festín De Cuervos", "Danza De Dragones"];
-			var correctRings=["El Hobbit", "La Comunidad Del Anillo", "Las Dos Torres", "El Retorno Del Rey"];
+    <script>
+    require([ "dojo/dnd/Source", "dojo/dom", "dojo/aspect","dojo/query", "dojo/domReady!" ], function(Source,dom,aspect,query){
 
 
-			function setMessage(){
-				var message = dom.byId("message");
-		    	if (isSongListOk() && isRingListOk()){
-		    		message.innerHTML = "¡Muy bien, eres un fenómeno!";
-		    		message.className="ok";
-		    	}else{
-			    	message.innerHTML = "Todavía te queda, no está bien.";
-			    	message.className="ko";
-		    	}
-			}
-
-			function isSongListOk(){
-				var songNodes = query("#songListNode li");
-				var currentSongs = new Array();
+        var correctSongs=["Juego De Tronos", "Choque De Reyes","Tormenta De Espadas", "Festín De Cuervos", "Danza De Dragones"];
+        var correctRings=["El Hobbit", "La Comunidad Del Anillo", "Las Dos Torres", "El Retorno Del Rey"];
 
 
-				songNodes.forEach(function (node,index,nodelist){
-					currentSongs[index]=node.innerHTML;
-				});
+        function setMessage(){
+            var message = dom.byId("message");
+            if (isSongListOk() && isRingListOk()){
+                message.innerHTML = "¡Muy bien, eres un fenómeno!";
+                message.className="ok";
+            }else{
+                message.innerHTML = "Todavía te queda, no está bien.";
+                message.className="ko";
+            }
+        }
+
+        function isSongListOk(){
+            var songNodes = query("#songListNode li");
+            var currentSongs = new Array();
+
+            songNodes.forEach(function (node,index,nodelist){
+                currentSongs[index]=node.innerHTML;
+            });
 
 
-				return currentSongs.toString()==correctSongs.toString();
+            return currentSongs.toString()==correctSongs.toString();
+        }
 
-			}
+        function isRingListOk(){
+            var ringNodes = query("#ringListNode li");
+            var currentRings = new Array();
 
-			function isRingListOk(){
-				var ringNodes = query("#ringListNode li");
-				var currentRings = new Array();
+            ringNodes.forEach(function (node,index,nodelist){
+                currentRings[index]=node.innerHTML;
+            });
 
-
-				ringNodes.forEach(function (node,index,nodelist){
-					currentRings[index]=node.innerHTML;
-				});
-
-
-				return currentRings.toString()==correctRings.toString();
-
-			}
+            return currentRings.toString()==correctRings.toString();
+        }
 
 
 
-			//Create dnd Sources
-			var bookList = new Source("bookListNode", {accept: ["song","ring"]});
-			bookList.insertNodes(false, [
-				{ data: "Tormenta De Espadas", 		type: ["song"] },
-				{ data: "Las Dos Torres", 			type: ["ring"] },
-				{ data: "Festín De Cuervos", 		type: ["song"] },
-				{ data: "Choque De Reyes", 			type: ["song"] },
-				{ data: "El Hobbit", 				type: ["ring"] },
-				{ data: "Juego De Tronos", 			type: ["song"] },
-				{ data: "La Comunidad Del Anillo",	type: ["ring"] },
-				{ data: "Danza De Dragones",		type: ["song"] },
-				{ data: "El Retorno Del Rey", 		type: ["ring"] },
+        //Create dnd Sources
+        var bookList = new Source("bookListNode", {accept: ["song","ring"]});
+        bookList.insertNodes(false, [
+            { data: "Tormenta De Espadas",      type: ["song"] },
+            { data: "Las Dos Torres",           type: ["ring"] },
+            { data: "Festín De Cuervos",        type: ["song"] },
+            { data: "Choque De Reyes",          type: ["song"] },
+            { data: "El Hobbit",                type: ["ring"] },
+            { data: "Juego De Tronos",          type: ["song"] },
+            { data: "La Comunidad Del Anillo",  type: ["ring"] },
+            { data: "Danza De Dragones",        type: ["song"] },
+            { data: "El Retorno Del Rey",       type: ["ring"] }]);
 
-			]);
+        var songList = new Source("songListNode", {accept: ["song"]});
+        var ringList = new Source("ringListNode", {accept: ["ring"]});
 
-			var songList = new Source("songListNode", {accept: ["song"]});
-			var ringList = new Source("ringListNode", {accept: ["ring"]});
+        aspect.after(bookList, "onDrop", setMessage);
+        aspect.after(songList, "onDrop", setMessage);
+        aspect.after(ringList, "onDrop", setMessage);
 
-			aspect.after(bookList, "onDrop", setMessage);
-			aspect.after(songList, "onDrop", setMessage);
-			aspect.after(ringList, "onDrop", setMessage);
-
-		});
+    });
 
 
-	</script>
+</script>
 
 </head>
 <body id="demo1">
-	<h1>dojo.dnd :: Demo 2</h1>
+    <h1>dojo.dnd :: Demo 2</h1>
 
-	<div id="store">
-		<div class="grid grid-pad">
-			<div class="bookListContainer col-1-3" >
-				<h2>Libros</h2>
-				<ol id="bookListNode" class="container"></ol>
-			</div>
+    <div id="store">
+        <div class="grid grid-pad">
+            <div class="bookListContainer col-1-3" >
+                <h2>Libros</h2>
+                <ol id="bookListNode" class="container"></ol>
+            </div>
 
 
-			<div class="songContainer col-1-3">
-				<h2>Canción de  Hielo y Fuego</h2>
-				<ol id="songListNode" class="container"></ol>
-			</div>
+            <div class="songContainer col-1-3">
+                <h2>Canción de  Hielo y Fuego</h2>
+                <ol id="songListNode" class="container"></ol>
+            </div>
 
-			<div class="ringContainer col-1-3">
-				<h2>El Señor De Los Anillos</h2>
-				<ol id="ringListNode" class="container"></ol>
-			</div>
+            <div class="ringContainer col-1-3">
+                <h2>El Señor De Los Anillos</h2>
+                <ol id="ringListNode" class="container"></ol>
+            </div>
+        </div>
+    </div>
 
-		</div>
-	</div>
-	<div class="grid grid-pad">
-		<div class="col-1-1">
-			<h1 id="message" />
-		</div>
-	</div>
+    <div class="grid grid-pad">
+        <div class="col-1-1">
+            <h1 id="message" />
+        </div>
+    </div>
 </body>
 </html>
